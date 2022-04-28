@@ -1,0 +1,25 @@
+name: Scheduled Merge Remote Action
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/5 * * * *' # scheduled for every 5 minutes
+  workflow_dispatch: # on button click
+
+jobs:
+  merge-upstream:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main                # set the branch to merge to
+          fetch-depth: 0 
+      - name: Merge Upstream - master
+        uses: Cubik65536/merge-upstream@v1.1.3
+        with:
+          upstream: MC-HMU/website # set the upstream repo
+          upstream-branch: main    # set the upstream branch to merge from
+          branch: main             #  set the branch to merge to
+          
